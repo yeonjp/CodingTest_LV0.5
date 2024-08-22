@@ -23,9 +23,12 @@ num1이 1, num2가 16이므로 1 / 16 = 0.0625에 1,000을 곱하면 62.5가 되
 SOLUTION
 class Solution {
     public int solution(int num1, int num2) {
-        int answer = 0;
-        
-        answer = (num1 % num2) * 1000;
-        return answer;
+        double answer = ((double)num1 / (double)num2) * 1000;
+        return (int)answer;
     }
 }
+
+산술 연산 시 타입 변환
+1) (double) a + b
+2) a + (double) b
+3) (double) a + (double) b
