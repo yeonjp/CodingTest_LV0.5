@@ -1,1 +1,83 @@
+Description
+정수 배열 num_list와 정수 n이 매개변수로 주어집니다. num_list를 다음 설명과 같이 2차원 배열로 바꿔 return하도록 solution 함수를 완성해주세요.
 
+num_list가 [1, 2, 3, 4, 5, 6, 7, 8] 로 길이가 8이고 n이 2이므로 num_list를 2 * 4 배열로 다음과 같이 변경합니다. 2차원으로 바꿀 때에는 num_list의 원소들을 앞에서부터 n개씩 나눠 2차원 배열로 변경합니다.
+
+num_list	n	result
+[1, 2, 3, 4, 5, 6, 7, 8]	2	[[1, 2], [3, 4], [5, 6], [7, 8]]
+제한사항
+num_list의 길이는 n의 배 수개입니다.
+0 ≤ num_list의 길이 ≤ 150
+2 ≤ n < num_list의 길이
+입출력 예
+num_list	n	result
+[1, 2, 3, 4, 5, 6, 7, 8]	2	[[1, 2], [3, 4], [5, 6], [7, 8]]
+[100, 95, 2, 4, 5, 6, 18, 33, 948]	3	[[100, 95, 2], [4, 5, 6], [18, 33, 948]]
+입출력 예 설명
+입출력 예 #1
+
+num_list가 [1, 2, 3, 4, 5, 6, 7, 8] 로 길이가 8이고 n이 2이므로 2 * 4 배열로 변경한 [[1, 2], [3, 4], [5, 6], [7, 8]] 을 return합니다.
+입출력 예 #2
+
+num_list가 [100, 95, 2, 4, 5, 6, 18, 33, 948] 로 길이가 9이고 n이 3이므로 3 * 3 배열로 변경한 [[100, 95, 2], [4, 5, 6], [18, 33, 948]] 을 return합니다.
+
+solution
+class Solution {
+    public int[][] solution(int[] num_list, int n) {
+        int[][] answer = new int[num_list.length / n][n];
+        
+        for(int i = 0; i < answer.length; i++){
+            for(int j = 0; j < answer[i].length; j++){
+                answer[i][j] = num_list[i];
+            }
+        }
+        return answer;
+    }
+}
+
+이렇게 작성하면 테스트 케이스가 
+Test 1
+Input 〉	[1, 2, 3, 4, 5, 6, 7, 8], 2
+Expected 〉	[[1, 2], [3, 4], [5, 6], [7, 8]]
+Result 〉	실행한 결괏값 [[1,1],[2,2],[3,3],[4,4]]이 기댓값 [[1,2],[3,4],[5,6],[7,8]]과 다릅니다.
+Test 2
+Input 〉	[100, 95, 2, 4, 5, 6, 18, 33, 948], 3
+Expected 〉	[[100, 95, 2], [4, 5, 6], [18, 33, 948]]
+Result 〉	실행한 결괏값 [[100,100,100],[95,95,95],[2,2,2]]이 기댓값 [[100,95,2],[4,5,6],[18,33,948]]과 다릅니다.
+
+이렇게 나온다...
+왜 이렇게 나오나 생각을 해봤는데 배열에 값을 할당하는 부분이 잘못 되어 있는 것 같음ㅋㅋ
+num_list[i]를 사용하고 있어서, 모든 요소가 같은 값으로 채워지게 됨...
+무지성 [i]를 했더니 이런 참사가.....
+i = 0일 때 j가 아무리 값이 바뀌어도....그냥 num_list[0]의 값을 answer 배열에 넣어주게 되는거임;;;;;
+
+class Solution {
+    public int[][] solution(int[] num_list, int n) {
+        int[][] answer = new int[num_list.length / n][n];
+        
+        for(int i = 0; i < answer.length; i++){
+            for(int j = 0; j < answer[i].length; j++){
+                answer[i][j] = num_list[i * n + j];
+            }
+        }
+        return answer;
+    }
+}
+-------------
+오 num_list.length를 그대로 쓰지 않고 변수로 바꿔서 넣는거 생각도 해봐야겠따.
+
+class Solution {
+    public int[][] solution(int[] num_list, int n) {
+        int[][] answer = {};
+
+        int length = num_list.length;
+
+        answer = new int[length/n][n];
+
+        for(int i=0; i<length; i++){
+            answer[i/n][i%n]=num_list[i];
+        }
+
+        return answer;
+    }
+}
