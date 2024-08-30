@@ -21,3 +21,117 @@ s	result
 "hello"에서 한 번씩 등장한 문자는 "heo"이고 이를 사전 순으로 정렬한 "eho"를 return 합니다.
 
 solution
+import java.util.*;
+class Solution {
+    public String solution(String s) {
+        String answer = "";
+        String[] arr = s.split("");
+        
+        List<String> result = new ArrayList<>();
+        
+        for(int i = 0; i < s.length(); i++){
+            if(!result.contains(arr[i])){
+                answer += arr[i];
+                result.add(arr[i]);
+            }else{
+                answer += "";
+                result.add("");
+            }
+        }
+              
+        Collections.sort(result);
+        
+        return result.toString();
+    }
+}
+
+이렇게 문제를 풀었더니 테스트 케이스 3개 다 말도 안되는...오답을 냈다ㅋㅋ
+Test 1
+Input 〉	"abcabcadc"
+Expected 〉	"d"
+Result 〉	실행한 결괏값 "[, , , , , a, b, c, d]"이 기댓값 "d"과 다릅니다.
+Test 2
+Input 〉	"abdc"
+Expected 〉	"abcd"
+Result 〉	실행한 결괏값 "[a, b, c, d]"이 기댓값 "abcd"과 다릅니다.
+Test 3
+Input 〉	"hello"
+Expected 〉	"eho"
+Result 〉	실행한 결괏값 "[, e, h, l, o]"이 기댓값 "eho"과 다릅니다.
+
+아무래도 내가 코드를 잘못 짜서 그런거겠지.../-\....
+chatGPT한테 물어보니까 내가 짠 코드는
+중복 문자 처리 문제:
+
+현재 코드에서는 중복되는 문자에 대해 result 리스트에 빈 문자열 ""을 추가하고 있습니다. 
+이로 인해 최종 결과에 빈 문자열이 포함됩니다.
+리스트 반환 문제:
+
+코드에서 result.toString()을 호출하면, 리스트의 내용을 문자열로 변환하지만, 
+이는 리스트의 원소들이 대괄호와 쉼표로 구분된 형식으로 출력됩니다. 
+따라서 원하는 형태의 문자열이 반환되지 않습니다.
+
+이런 문제가 있다고 한다.
+
+문제를 해결하기 위한 수정 사항:
+중복되는 문자를 발견했을 때 result 리스트에 빈 문자열을 추가하지 말고, 이미 리스트에 있는 해당 문자를 제거해야 합니다. 
+이는 해당 문자가 여러 번 등장했음을 의미하므로, 리스트에서 제거하여 한 번만 등장한 문자만 남도록 해야 합니다.
+최종적으로 리스트를 문자열로 합칠 때, result.toString() 대신 String.join()을 사용하여 리스트의 원소들을 하나의 문자열로 결합합니다.
+
+위의 말을 듣고
+import java.util.*;
+class Solution {
+    public String solution(String s) {
+        String answer = "";
+        String[] arr = s.split("");
+        
+        List<String> result = new ArrayList<>();
+        
+        for(String str : arr){
+            if(result.contains(str)){
+                result.remove(str);
+            }else{
+                result.add(str);
+            }
+        }
+              
+        Collections.sort(result);
+        
+        return String.join("", result);
+    }
+}
+
+이렇게 작성했는데 이번에는 test case 1을 통과하지 못했다.
+Test 1
+Input 〉	"abcabcadc"
+Expected 〉	"d"
+Result 〉	실행한 결괏값 "acd"이 기댓값 "d"과 다릅니다.
+
+일단은...그냥 새로 작성해서 해보기로 했다.
+
+import java.util.*;
+
+class Solution {
+    public String solution(String s) {
+        String answer = "";
+        String[] arr = s.split("");
+        int count = 0;
+        
+        //사전 순으로 정렬
+        Arrays.sort(arr);
+        
+        for(int i = 0; i < arr.length; i++){
+            count = 0;
+            for(int j = 0; j < arr.length; j++){
+                if(arr[i].equals(arr[j])){
+                    count++;
+                }
+            }
+            if(count == 1){
+                    answer += arr[i];
+                }
+        }
+        
+        return answer;
+    }
+}
