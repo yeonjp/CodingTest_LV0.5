@@ -20,3 +20,40 @@ my_string	num1	num2	result
 
 solution
 
+class Solution {
+    public String solution(String my_string, int num1, int num2) {
+        String answer = "";
+        String[] arr = my_string.split("");
+        //["h","e","l","l","o"]
+        String temp = "";
+        
+        //temp에 arr[num1] 값 담기
+        temp = arr[num1];
+        //비어있는 arr[num1] 값에 arr[num2] 값 담기
+        arr[num1] = arr[num2];
+        //비어있는 arr[num2] 값에 temp에 담아둔 arr[num1] 값 담기
+        arr[num2] = temp;
+       
+        for(int i = 0; i < arr.length; i++){
+            answer += arr[i];
+        }
+        
+        return answer;
+    }
+}
+--------------------
+class Solution {
+    public String solution(String my_string, int num1, int num2) {
+        String answer = "";
+
+        char[] ch = my_string.toCharArray();
+
+        ch[num1] = my_string.charAt(num2);
+        ch[num2] = my_string.charAt(num1);
+
+        answer = String.valueOf(ch);
+        return answer;
+    }
+}
+
+이 풀이가 정말 직관적이고 한눈에 알아보기도 쉽다...!!!!!!!
