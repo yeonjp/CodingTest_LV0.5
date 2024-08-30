@@ -1,0 +1,79 @@
+Description
+영어가 싫은 머쓱이는 영어로 표기되어있는 숫자를 수로 바꾸려고 합니다. 문자열 numbers가 매개변수로 주어질 때, numbers를 정수로 바꿔 return 하도록 solution 함수를 완성해 주세요.
+
+제한사항
+numbers는 소문자로만 구성되어 있습니다.
+numbers는 "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" 들이 공백 없이 조합되어 있습니다.
+1 ≤ numbers의 길이 ≤ 50
+"zero"는 numbers의 맨 앞에 올 수 없습니다.
+입출력 예
+numbers	result
+"onetwothreefourfivesixseveneightnine"	123456789
+"onefourzerosixseven"	14067
+입출력 예 설명
+입출력 예 #1
+
+"onetwothreefourfivesixseveneightnine"를 숫자로 바꾼 123456789를 return합니다.
+입출력 예 #1
+
+"onefourzerosixseven"를 숫자로 바꾼 14067를 return합니다.
+
+SOLUTION
+
+class Solution {
+    public long solution(String numbers) {
+        long answer = 0;
+        String[] numArr = {
+            "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
+        };
+        
+        for(int i = 0; i < numbers.length(); i++){
+            numbers = numbers.replaceAll(numArr[i], String.valueOf(i));
+        }
+        
+        return Long.parseLong(numbers);
+    }
+}
+
+이렇게 하면
+채점을 시작합니다.
+정확성  테스트
+Test 1 〉	통과 (0.42ms, 74.4MB)
+Test 2 〉	통과 (0.40ms, 82.3MB)
+Test 3 〉	통과 (0.39ms, 76.8MB)
+Test 4 〉	통과 (0.49ms, 75.7MB)
+Test 5 〉	통과 (0.49ms, 76MB)
+Test 6 〉	실패 (런타임 에러)
+Test 7 〉	통과 (0.63ms, 74.5MB)
+Test 8 〉	통과 (0.52ms, 74.3MB)
+Test 9 〉	실패 (런타임 에러)
+Submission result
+정확성: 77.8
+Total score: 77.8 / 100.0
+
+이런 결과가 나온다...
+하...정말 하나하나 다 바꿔주는 그런 수고스러운 일을 해야 하는걸까???????
+=> 알고보니 내가 for문 도는 길이를 잘못 설정해서 인덱스 범위를 초과하는 문제가 발생해서
+런타임 에러가 발생한거였음ㅋㅋ
+
+답
+class Solution {
+    public long solution(String numbers) {
+        // 결과를 담을 변수, 초기값은 0
+        long answer = 0;
+
+        // 숫자 단어들을 배열에 저장
+        String[] numArr = {
+            "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
+        };
+        
+        // numArr 배열을 순회하며 숫자 단어를 해당 숫자로 변환
+        for(int i = 0; i < numArr.length; i++){
+            // numbers 문자열에서 numArr[i]에 해당하는 단어를 i로 변환
+            numbers = numbers.replaceAll(numArr[i], String.valueOf(i));
+        }
+        
+        // 변환된 숫자 문자열을 long 타입의 정수로 변환하여 반환
+        return Long.parseLong(numbers);
+    }
+}
