@@ -22,3 +22,42 @@ keyinput	board	result
 
 [0, 0]에서 아래로 다섯 칸 이동한 좌표는 [0, -5]이지만 맵의 세로 크기가 9이므로 아래로는 네 칸을 넘어서 이동할 수 없습니다. 따라서 [0, -4]를 return합니다.
 
+class Solution {
+    public int[] solution(String[] keyinput, int[] board) {
+        
+        int[] answer = {0,0};
+        
+        int x = board[0] / 2;
+        int y = board[1] / 2;
+        
+        for(int i = 0; i < keyinput.length; i++){
+            switch(keyinput[i]){
+                case "left":
+                    answer[0]--;
+                    if(answer[0]< -x){
+                        answer[0] = -x;
+                    }
+                    break;
+                case "right":
+                    answer[0]++;
+                    if(answer[0] > x){
+                        answer[0] = x;
+                    }
+                    break;
+                case "up":
+                    answer[1]++;
+                    if(answer[1] > y){
+                        answer[1] = y;
+                    }
+                    break;
+                case "down":
+                    answer[1]--;
+                    if(answer[1] < -y){
+                        answer[1] = -y;
+                    }
+                    break;
+            }
+        }
+        return answer;
+    }
+}
